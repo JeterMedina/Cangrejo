@@ -8,20 +8,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Crab extends Actor
 {
-    private Counter contadorVidas;
+    private Counter vidas;
     private Counter contadorPuntuaje;
     
     public Crab()
     {
-        contadorVidas = new Counter("Vida: ");;
-        contadorVidas.setValue(3);
         contadorPuntuaje = new Counter("Puntos: ");;
         contadorPuntuaje.setValue(0);
     }
     
     protected void addedToWorld(World world)
     {
-        world.addObject(contadorVidas,500,20);
         world.addObject(contadorPuntuaje,400,20);
     }
     
@@ -44,11 +41,14 @@ public class Crab extends Actor
             //Greenfoot.playSound("eating.wav");
         }
         if(isTouching(Lobster.class)){
-            contadorVidas.setValue(contadorVidas.getValue() - 1);
-            setLocation(257,361);
-        }
-        if(contadorVidas.getValue() == 0){
-            Greenfoot.stop();
+            vidas.setValue(vidas.getValue() - 1);
+            setLocation(250,250);
+            Label perdiste = new Label("Perdiste una vida",30);
+            getWorld().addObject(perdiste,250,250);
+            Greenfoot.delay(50);
+            getWorld().removeObject(perdiste);
+            //getWorld().showText("Perdiste una vida",200,200);
+            getWorldOfType(CrabWorld.class).accedeLangosta().setLocation(250,500);
         }
     }    
 }
